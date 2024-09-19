@@ -36,7 +36,7 @@ export const ListingEdit = (props: EditProps): React.ReactElement => {
         <div />
         <TextInput label="placeType" source="placeType" />
         <NumberInput label="price" source="price" />
-        <TextInput label="title" source="title" />
+        <TextInput label="title" multiline source="title" />
         <ReferenceArrayInput source="trips" reference="Trip">
           <SelectArrayInput
             optionText={TripTitle}

@@ -4,6 +4,6 @@ import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
 
 export type TripCreateInput = {
   listing: ListingWhereUniqueInput;
-  tripinfo: InputJsonValue;
+  tripInfo: InputJsonValue;
   user: UserWhereUniqueInput;
 };

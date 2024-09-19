@@ -116,7 +116,7 @@ class ListingCreateInput {
     type: String,
   })
   @IsString()
-  @MaxLength(1000)
+  @MaxLength(256)
   @Field(() => String)
   title!: string;
 

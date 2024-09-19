@@ -9,7 +9,7 @@ export type User = {
   firstName: string | null;
   id: string;
   lastName: string | null;
-  listings?: Array<Listing>;
+  listings?: Listing | null;
   roles: JsonValue;
   trips?: Array<Trip>;
   updatedAt: Date;

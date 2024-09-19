@@ -68,7 +68,7 @@ export class TripControllerBase {
           },
         },
 
-        tripinfo: true,
+        tripInfo: true,
         updatedAt: true,
 
         user: {
@@ -106,7 +106,7 @@ export class TripControllerBase {
           },
         },
 
-        tripinfo: true,
+        tripInfo: true,
         updatedAt: true,
 
         user: {
@@ -145,7 +145,7 @@ export class TripControllerBase {
           },
         },
 
-        tripinfo: true,
+        tripInfo: true,
         updatedAt: true,
 
         user: {
@@ -203,7 +203,7 @@ export class TripControllerBase {
             },
           },
 
-          tripinfo: true,
+          tripInfo: true,
           updatedAt: true,
 
           user: {
@@ -250,7 +250,7 @@ export class TripControllerBase {
             },
           },
 
-          tripinfo: true,
+          tripInfo: true,
           updatedAt: true,
 
           user: {

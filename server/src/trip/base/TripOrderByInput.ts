@@ -61,7 +61,7 @@ class TripOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
-  tripinfo?: SortOrder;
+  tripInfo?: SortOrder;
 
   @ApiProperty({
     required: false,

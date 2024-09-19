@@ -17,7 +17,7 @@ import {
   MaxLength,
   ValidateNested,
 } from "class-validator";
-import { ListingUpdateManyWithoutUsersInput } from "./ListingUpdateManyWithoutUsersInput";
+import { ListingWhereUniqueInput } from "../../listing/base/ListingWhereUniqueInput";
 import { Type } from "class-transformer";
 import { IsJSONValue } from "../../validators";
 import { GraphQLJSON } from "graphql-type-json";
@@ -64,15 +64,15 @@ class UserUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: () => ListingUpdateManyWithoutUsersInput,
+    type: () => ListingWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => ListingUpdateManyWithoutUsersInput)
+  @Type(() => ListingWhereUniqueInput)
   @IsOptional()
-  @Field(() => ListingUpdateManyWithoutUsersInput, {
+  @Field(() => ListingWhereUniqueInput, {
     nullable: true,
   })
-  listings?: ListingUpdateManyWithoutUsersInput;
+  listings?: ListingWhereUniqueInput | null;
 
   @ApiProperty({
     required: false,

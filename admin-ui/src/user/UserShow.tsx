@@ -6,13 +6,13 @@ import {
   ShowProps,
   DateField,
   TextField,
+  ReferenceField,
   ReferenceManyField,
   Datagrid,
-  ReferenceField,
 } from "react-admin";
 
-import { USER_TITLE_FIELD } from "./UserTitle";
 import { LISTING_TITLE_FIELD } from "../listing/ListingTitle";
+import { USER_TITLE_FIELD } from "./UserTitle";
 
 export const UserShow = (props: ShowProps): React.ReactElement => {
   return (
@@ -23,37 +23,16 @@ export const UserShow = (props: ShowProps): React.ReactElement => {
         <TextField label="First Name" source="firstName" />
         <TextField label="ID" source="id" />
         <TextField label="Last Name" source="lastName" />
+        <ReferenceField
+          label="listings"
+          source="listing.id"
+          reference="Listing"
+        >
+          <TextField source={LISTING_TITLE_FIELD} />
+        </ReferenceField>
         <TextField label="Roles" source="roles" />
         <DateField source="updatedAt" label="Updated At" />
         <TextField label="Username" source="username" />
-        <ReferenceManyField
-          reference="Listing"
-          target="listingCreatedById"
-          label="Listings"
-        >
-          <Datagrid rowClick="show" bulkActionButtons={false}>
-            <DateField source="createdAt" label="Created At" />
-            <TextField label="description" source="description" />
-            <TextField label="ID" source="id" />
-            <ReferenceField
-              label="listingCreatedBy"
-              source="user.id"
-              reference="User"
-            >
-              <TextField source={USER_TITLE_FIELD} />
-            </ReferenceField>
-            <TextField label="locationData" source="locationData" />
-            <TextField label="locationType" source="locationType" />
-            <TextField label="mapData" source="mapData" />
-            <TextField label="photos" source="photos" />
-            <TextField label="placeAmeneties" source="placeAmeneties" />
-            <TextField label="placeSpace" source="placeSpace" />
-            <TextField label="placeType" source="placeType" />
-            <TextField label="price" source="price" />
-            <TextField label="title" source="title" />
-            <DateField source="updatedAt" label="Updated At" />
-          </Datagrid>
-        </ReferenceManyField>
         <ReferenceManyField reference="Trip" target="userId" label="trips">
           <Datagrid rowClick="show" bulkActionButtons={false}>
             <DateField source="createdAt" label="Created At" />
@@ -65,7 +44,7 @@ export const UserShow = (props: ShowProps): React.ReactElement => {
             >
               <TextField source={LISTING_TITLE_FIELD} />
             </ReferenceField>
-            <TextField label="tripinfo" source="tripinfo" />
+            <TextField label="tripInfo" source="tripInfo" />
             <DateField source="updatedAt" label="Updated At" />
             <ReferenceField label="user" source="user.id" reference="User">
               <TextField source={USER_TITLE_FIELD} />
@@ -75,7 +54,7 @@ export const UserShow = (props: ShowProps): React.ReactElement => {
         <ReferenceManyField
           reference="Wishlist"
           target="userId"
-          label="Wishlists"
+          label="wishlists"
         >
           <Datagrid rowClick="show" bulkActionButtons={false}>
             <DateField source="createdAt" label="Created At" />
