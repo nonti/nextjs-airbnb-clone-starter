@@ -26,9 +26,6 @@ import { User } from "./User";
 import { UserFindManyArgs } from "./UserFindManyArgs";
 import { UserWhereUniqueInput } from "./UserWhereUniqueInput";
 import { UserUpdateInput } from "./UserUpdateInput";
-import { ListingFindManyArgs } from "../../listing/base/ListingFindManyArgs";
-import { Listing } from "../../listing/base/Listing";
-import { ListingWhereUniqueInput } from "../../listing/base/ListingWhereUniqueInput";
 import { TripFindManyArgs } from "../../trip/base/TripFindManyArgs";
 import { Trip } from "../../trip/base/Trip";
 import { TripWhereUniqueInput } from "../../trip/base/TripWhereUniqueInput";
@@ -56,13 +53,28 @@ export class UserControllerBase {
   })
   async createUser(@common.Body() data: UserCreateInput): Promise<User> {
     return await this.service.createUser({
-      data: data,
+      data: {
+        ...data,
+
+        listings: data.listings
+          ? {
+              connect: data.listings,
+            }
+          : undefined,
+      },
       select: {
         createdAt: true,
         email: true,
         firstName: true,
         id: true,
         lastName: true,
+
+        listings: {
+          select: {
+            id: true,
+          },
+        },
+
         roles: true,
         updatedAt: true,
         username: true,
@@ -92,6 +104,13 @@ export class UserControllerBase {
         firstName: true,
         id: true,
         lastName: true,
+
+        listings: {
+          select: {
+            id: true,
+          },
+        },
+
         roles: true,
         updatedAt: true,
         username: true,
@@ -122,6 +141,13 @@ export class UserControllerBase {
         firstName: true,
         id: true,
         lastName: true,
+
+        listings: {
+          select: {
+            id: true,
+          },
+        },
+
         roles: true,
         updatedAt: true,
         username: true,
@@ -154,13 +180,28 @@ export class UserControllerBase {
     try {
       return await this.service.updateUser({
         where: params,
-        data: data,
+        data: {
+          ...data,
+
+          listings: data.listings
+            ? {
+                connect: data.listings,
+              }
+            : undefined,
+        },
         select: {
           createdAt: true,
           email: true,
           firstName: true,
           id: true,
           lastName: true,
+
+          listings: {
+            select: {
+              id: true,
+            },
+          },
+
           roles: true,
           updatedAt: true,
           username: true,
@@ -199,6 +240,13 @@ export class UserControllerBase {
           firstName: true,
           id: true,
           lastName: true,
+
+          listings: {
+            select: {
+              id: true,
+            },
+          },
+
           roles: true,
           updatedAt: true,
           username: true,
@@ -212,118 +260,6 @@ export class UserControllerBase {
       }
       throw error;
     }
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @common.Get("/:id/listings")
-  @ApiNestedQuery(ListingFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Listing",
-    action: "read",
-    possession: "any",
-  })
-  async findListings(
-    @common.Req() request: Request,
-    @common.Param() params: UserWhereUniqueInput
-  ): Promise<Listing[]> {
-    const query = plainToClass(ListingFindManyArgs, request.query);
-    const results = await this.service.findListings(params.id, {
-      ...query,
-      select: {
-        createdAt: true,
-        description: true,
-        id: true,
-
-        listingCreatedBy: {
-          select: {
-            id: true,
-          },
-        },
-
-        locationData: true,
-        locationType: true,
-        mapData: true,
-        photos: true,
-        placeAmeneties: true,
-        placeSpace: true,
-        placeType: true,
-        price: true,
-        title: true,
-        updatedAt: true,
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results;
-  }
-
-  @common.Post("/:id/listings")
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  async connectListings(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: ListingWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      listings: {
-        connect: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Patch("/:id/listings")
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  async updateListings(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: ListingWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      listings: {
-        set: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Delete("/:id/listings")
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  async disconnectListings(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: ListingWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      listings: {
-        disconnect: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
@@ -351,7 +287,7 @@ export class UserControllerBase {
           },
         },
 
-        tripinfo: true,
+        tripInfo: true,
         updatedAt: true,
 
         user: {

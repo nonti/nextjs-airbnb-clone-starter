@@ -15,7 +15,7 @@ export const WishlistList = (props: ListProps): React.ReactElement => {
   return (
     <List
       {...props}
-      title={"Wishlists"}
+      title={"wishlists"}
       perPage={50}
       pagination={<Pagination />}
     >

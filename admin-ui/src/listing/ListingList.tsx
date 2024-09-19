@@ -14,7 +14,7 @@ export const ListingList = (props: ListProps): React.ReactElement => {
   return (
     <List
       {...props}
-      title={"Listings"}
+      title={"listings"}
       perPage={50}
       pagination={<Pagination />}
     >

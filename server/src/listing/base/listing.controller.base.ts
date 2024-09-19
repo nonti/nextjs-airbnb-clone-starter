@@ -310,7 +310,7 @@ export class ListingControllerBase {
           },
         },
 
-        tripinfo: true,
+        tripInfo: true,
         updatedAt: true,
 
         user: {

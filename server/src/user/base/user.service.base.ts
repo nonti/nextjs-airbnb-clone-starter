@@ -14,9 +14,9 @@ import { PrismaService } from "../../prisma/prisma.service";
 import {
   Prisma,
   User as PrismaUser,
-  Listing as PrismaListing,
   Trip as PrismaTrip,
   Wishlist as PrismaWishlist,
+  Listing as PrismaListing,
 } from "@prisma/client";
 
 import { PasswordService } from "../../auth/password.service";
@@ -68,17 +68,6 @@ export class UserServiceBase {
     return this.prisma.user.delete(args);
   }
 
-  async findListings(
-    parentId: string,
-    args: Prisma.ListingFindManyArgs
-  ): Promise<PrismaListing[]> {
-    return this.prisma.user
-      .findUniqueOrThrow({
-        where: { id: parentId },
-      })
-      .listings(args);
-  }
-
   async findTrips(
     parentId: string,
     args: Prisma.TripFindManyArgs
@@ -99,5 +88,13 @@ export class UserServiceBase {
         where: { id: parentId },
       })
       .wishlists(args);
+  }
+
+  async getListings(parentId: string): Promise<PrismaListing | null> {
+    return this.prisma.user
+      .findUnique({
+        where: { id: parentId },
+      })
+      .listings();
   }
 }
